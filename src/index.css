@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+
+
+  @font-face {
+    font-family: 'SegoeUi';
+    src: url('/src/assets/fonts/SegoeUi.ttf');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'SegoeUibold';
+    src: url('/src/assets/fonts/SegoeUi.ttf');
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  .description {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+
+  .custom-textfield .MuiInputBase-input {
+    font-size: '75rem'; 
+  }
+  
+  .custom-textfield .MuiInputLabel-root {
+    font-size: "75rem"; 
+  }
+
+
+  
+  

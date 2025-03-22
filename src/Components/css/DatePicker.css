@@ -1,0 +1,8 @@
+.custom-textfield .MuiInputBase-input {
+    font-size:' 1px'; /* Adjust input and placeholder font size */
+  }
+  
+  .custom-textfield .MuiInputLabel-root {
+    font-size: '1px'; /* Adjust label font size */
+  }
+  
