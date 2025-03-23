@@ -528,7 +528,7 @@ const Profile = () => {
                                           key={option.value}
                                           value={option.value}
                                         >
-                                          {option.label}
+                                          {option}
                                         </option>
                                       ))}
                                     </select>
