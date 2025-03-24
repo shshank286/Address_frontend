@@ -65,7 +65,7 @@ const Profile = () => {
   const [cities, setCities] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedState, setSelectedState] = useState("");
-  const [selectedCity, setSelectedCity] = useState("");
+  const [selectedCity, setSelectedDistrict] = useState("");
 
   //GET PROFILE API
   const getProfile = async () => {
@@ -228,16 +228,17 @@ const Profile = () => {
   }, [selectedCountry]);
 
   // Fetch cities when a state is selected
+
+  const fetchCities = async () => {
+    try {
+      const data = await getCitiesByState(selectedState);
+      setCities(data);
+    } catch (error) {
+      console.error("Error fetching cities:", error);
+    }
+  };
   useEffect(() => {
     if (selectedState) {
-      const fetchCities = async () => {
-        try {
-          const data = await getCitiesByState(selectedState);
-          setCities(data);
-        } catch (error) {
-          console.error("Error fetching cities:", error);
-        }
-      };
       fetchCities();
     }
   }, [selectedState]);
@@ -470,23 +471,29 @@ const Profile = () => {
                           label: "State",
                           field: "state",
                           type: "dropdown",
+                          value: selectedState, // Ensure the ID is set correctly
                           options:
                             states?.map((state) => ({
-                              value: state.id, // Send ID
+                              value: state.id, // Store ID
                               label: state.name, // Display Name
                             })) || [],
-                          value: selectedState, // Ensure the correct value is displayed
                           onChange: (e) => {
-                            const selectedStateId = Number(e.target.value); // Convert to number (if IDs are numbers)
+                            const selectedStateId = Number(e.target.value); // Get selected state ID
                             const selectedStateName = states.find(
-                              (state) => state.id === selectedStateId // Direct comparison
-                            )?.name;
+                              (state) => state.id === selectedStateId
+                            )?.name; // Get the state name
 
                             setSelectedState(selectedStateId); // Save ID
+
                             setFields((prev) => ({
                               ...prev,
-                              state: selectedStateName, // Save Name
+                              state: selectedStateName, // Store name (for display)
                             }));
+
+                            setSelectedDistrict(null); // Reset district selection
+
+                            // Fetch cities based on selected state ID
+                            fetchCities(selectedStateId);
                           },
                         },
                         {
@@ -533,13 +540,30 @@ const Profile = () => {
                                   type === "dropdown" ? (
                                     <select
                                       className="outline-none border p-1 rounded-lg w-full sm:w-auto"
-                                      value={fields[field] || ""}
+                                      value={
+                                        field === "country"
+                                          ? selectedCountry
+                                          : field === "state"
+                                          ? selectedState
+                                          : field === "district"
+                                          ? selectedCity
+                                          : fields[field] || ""
+                                      }
                                       onChange={(e) => {
-                                        setFields((prev) => ({
-                                          ...prev,
-                                          [field]: e.target.value,
-                                        }));
-                                        if (onChange) onChange(e);
+                                        if (
+                                          field === "country" ||
+                                          field === "state" ||
+                                          field === "district"
+                                        ) {
+                                          // Special handling for location fields
+                                          if (onChange) onChange(e);
+                                        } else {
+                                          // Standard handling for gender, occupation, etc.
+                                          setFields((prev) => ({
+                                            ...prev,
+                                            [field]: e.target.value,
+                                          }));
+                                        }
                                       }}
                                     >
                                       <option value="" disabled>
