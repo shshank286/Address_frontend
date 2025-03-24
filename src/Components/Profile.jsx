@@ -398,7 +398,11 @@ const Profile = () => {
                           label: "Gender",
                           field: "gender",
                           type: "dropdown",
-                          options: ["Male", "Female", "Other"],
+                          options: [
+                            { value: "Male", label: "Male" },
+                            { value: "Female", label: "Female" },
+                            { value: "Other", label: "Other" },
+                          ],
                         },
                         {
                           icon: <FaBriefcase />,
@@ -406,13 +410,31 @@ const Profile = () => {
                           field: "occupation",
                           type: "dropdown",
                           options: [
-                            "Government / Public Sector",
-                            "Private Sector / Corporate",
-                            "Self-Employed / Freelancers / Entrepreneurs",
-                            "Agriculture / Labor / Skilled Trades",
-                            "Education / Healthcare / Services",
+                            {
+                              value: "Government / Public Sector",
+                              label: "Government / Public Sector",
+                            },
+                            {
+                              value: "Private Sector / Corporate",
+                              label: "Private Sector / Corporate",
+                            },
+                            {
+                              value:
+                                "Self-Employed / Freelancers / Entrepreneurs",
+                              label:
+                                "Self-Employed / Freelancers / Entrepreneurs",
+                            },
+                            {
+                              value: "Agriculture / Labor / Skilled Trades",
+                              label: "Agriculture / Labor / Skilled Trades",
+                            },
+                            {
+                              value: "Education / Healthcare / Services",
+                              label: "Education / Healthcare / Services",
+                            },
                           ],
                         },
+
                         {
                           icon: <FaHome />,
                           label: "Address",
@@ -528,7 +550,7 @@ const Profile = () => {
                                           key={option.value}
                                           value={option.value}
                                         >
-                                          {option}
+                                          {option.label}
                                         </option>
                                       ))}
                                     </select>
